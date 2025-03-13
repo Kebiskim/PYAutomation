@@ -3,8 +3,13 @@
     "keywords": [],
     "pythonScriptPath": "../automation-back/news_scraper_byKeyword.py",
     "alternativeScriptPaths": [
-      "scripts/news_scraper_byKeyword.py",
-      "../scripts/news_scraper_byKeyword.py",
-      "../news_scraper_byKeyword.py"
-    ]
+        "scripts/news_scraper_byKeyword.py",
+        "../scripts/news_scraper_byKeyword.py",
+        "../news_scraper_byKeyword.py"
+    ],
+    "excel_path": "C:\\Users\\cofis\\Downloads\\news_results.xlsx",
+    "windowWidth": 1936,
+    "windowHeight": 1048,
+    "windowResizable": true,
+    "devToolsEnabled": true
 }

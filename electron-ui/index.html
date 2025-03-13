@@ -1,4 +1,3 @@
-\Automation_Framework\electron-ui\index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,76 +11,79 @@
 <body>
     <h1>자동화 프로그램</h1>
     
-    <div class="keyword-container">
-        <h3>검색할 키워드</h3>
-        <p>최대 10개까지 키워드를 추가할 수 있습니다.</p>
-        <div id="error-message" class="error-message">키워드를 입력해주세요.</div>
-        
-        <div id="keywords-list">
-            <div class="keyword-row">
-                <input type="text" class="keyword-input" placeholder="검색 키워드 입력">
-                <button class="remove-btn" onclick="removeKeyword(this)" disabled>삭제</button>
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="file-path-container">
+                <h4>엑셀 저장 위치</h4>
+                <div id="path-error-message" class="path-error-message">저장 경로를 선택해주세요.</div>
+                <div class="file-path-row">
+                    <input type="text" id="excelPath" placeholder="저장 경로를 선택하려면 클릭하세요" readonly>
+                    <button id="selectPath">경로 선택</button>
+                </div>
+            </div>
+            
+            <div class="keyword-container">
+                <h3>검색할 키워드</h3>
+                <p>비어있는 키워드는 검색하지 않습니다.</p>
+                <div id="error-message" class="error-message">최소 하나의 키워드를 입력해주세요.</div>
+                
+                <div id="keywords-grid">
+                    <!-- 10개의 기본 키워드 입력 필드 -->
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 1">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 2">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 3">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 4">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 5">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 6">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 7">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 8">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 9">
+                    </div>
+                    <div class="keyword-row">
+                        <input type="text" class="keyword-input" placeholder="검색 키워드 10">
+                    </div>
+                </div>
+                
+                <div class="keyword-actions">
+                    <button id="runAutomation">작업 시작</button>
+                    <button id="stopAutomation">작업 중단</button>
+                </div>
             </div>
         </div>
         
-        <div class="keyword-actions">
-            <button id="add-keyword" onclick="addKeyword()">키워드 추가</button>
-            <div class="separator"></div>
-            <button id="runAutomation">작업 시작</button>
-            <button id="stopAutomation">작업 중단</button>
+        <div class="right-panel">
+            <div class="log-container">
+                <h3>작업 로그</h3>
+                <textarea id="logOutput" readonly></textarea>
+                <div class="log-actions">
+                    <button id="clearLog">로그 지우기</button>
+                    <button id="saveLog">로그 저장</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <script>
-        function addKeyword() {
-            const keywordsList = document.getElementById('keywords-list');
-            const keywordRows = keywordsList.querySelectorAll('.keyword-row');
-            
-            // 최대 10개 제한
-            if (keywordRows.length >= 10) {
-                alert('최대 10개까지만 추가할 수 있습니다.');
-                return;
-            }
-            
-            const newRow = document.createElement('div');
-            newRow.className = 'keyword-row';
-            newRow.innerHTML = `
-                <input type="text" class="keyword-input" placeholder="검색 키워드 입력">
-                <button class="remove-btn" onclick="removeKeyword(this)">삭제</button>
-            `;
-            
-            keywordsList.appendChild(newRow);
-            
-            // 첫 번째 행의 삭제 버튼 활성화 (2개 이상이면)
-            if (keywordRows.length === 1) {
-                document.querySelector('.remove-btn').disabled = false;
-            }
-        }
-        
-        function removeKeyword(button) {
-            const keywordsList = document.getElementById('keywords-list');
-            const row = button.parentNode;
-            keywordsList.removeChild(row);
-            
-            // 행이 하나만 남으면 삭제 버튼 비활성화
-            const keywordRows = keywordsList.querySelectorAll('.keyword-row');
-            if (keywordRows.length === 1) {
-                keywordRows[0].querySelector('.remove-btn').disabled = true;
-            }
-        }
-        
-        // 작업 시작/중단 버튼 전환 기능
-        document.getElementById('runAutomation').addEventListener('click', function() {
-            this.style.display = 'none';
-            document.getElementById('stopAutomation').style.display = 'block';
-        });
-        
-        document.getElementById('stopAutomation').addEventListener('click', function() {
-            this.style.display = 'none';
-            document.getElementById('runAutomation').style.display = 'block';
-        });
-    </script>
-    
+    <!-- Load renderer.js first which sets up the Electron IPC bridge -->
     <script src="renderer.js"></script>
+    
+    <!-- Then load our main application script -->
+    <script src="scripts/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+
+        /* Custom menu styling */
+        .menu-bar {
+            background-color: #f5f5f5;
+        }
+        
+        .menu-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .menu-item:hover {
+            background-color: #e8e8e8;
+        }
+        
+        /* System menu styling overrides */
+        :root {
+            --menu-hover-bg: #e8e8e8;
+        }
+        
+        /* This may not affect the native menu but is available for custom menus */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --menu-hover-bg: #505050;
+            }
+        }
+    
