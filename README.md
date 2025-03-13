@@ -3,7 +3,7 @@
 
 ---
 
-# Project 실행을 위한 사전 준비사항
+# 2. Project 실행을 위한 사전 준비사항
 
 ## Install Python Modules
 ```
@@ -17,7 +17,7 @@ npm install electron --save-dev
 
 ---
 
-## Project Structure
+### 참고: Project Structure
 ```
 Automation_Framework/
 │
