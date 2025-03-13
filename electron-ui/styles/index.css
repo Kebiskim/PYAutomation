@@ -1,0 +1,104 @@
+.keyword-container {
+    margin: 20px 0;
+    max-width: 600px;
+}
+
+.keyword-row {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.keyword-input {
+    flex-grow: 1;
+    padding: 8px;
+    margin-right: 10px;
+}
+
+.keyword-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+/* Add a separator line after the add-keyword button */
+.separator {
+    width: 80%;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 5px 0 15px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+/* 버튼 크기 조절 */
+.remove-btn {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    min-width: 50px;
+    height: 30px;
+    background-color: #9e9e9e;  /* 회색 배경색 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.remove-btn:hover {
+    background-color: #757575;  /* 더 짙은 회색으로 변경 */
+}
+
+/* Smaller add-keyword button */
+#add-keyword {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    min-width: 84px;
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Action buttons (run and stop) */
+#runAutomation, #stopAutomation {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    min-width: 120px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#runAutomation {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#stopAutomation {
+    background-color: #f44336;
+    color: white;
+    display: none;
+}
+
+/* Hover effects for all buttons */
+#add-keyword:hover, #runAutomation:hover, #stopAutomation:hover {
+    opacity: 0.9;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}

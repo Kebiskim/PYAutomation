@@ -1,11 +1,12 @@
 ## Install Python Modules
 ```
-pip install PyQt5
+pip install PyQt5, selenium
 ```
 
 ## Install node modules
+```
 npm install electron --save-dev
-
+```
 
 ## Project Structure
 ```
@@ -26,8 +27,8 @@ Automation_Framework/
 │   ├── pandas_automation.py    # Pandas automation scripts
 │   └── utils.py            # Helper functions (e.g., logging, error handling)
 │
+├── config.json             # 
 ├── main.py                 # Python entry point (runs the automation logic)
 ├── package.json            # Electron dependencies and script
 └── README.md               # Project documentation
-
 ```
