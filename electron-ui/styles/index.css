@@ -1,18 +1,140 @@
+/* Base layout for 1200x800 window with 5% padding */
+body {
+    margin: 0;
+    padding: 5% 5%;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+/* Main container with split panels */
+.main-container {
+    display: flex;
+    flex-direction: row;
+    height: 680px; /* About 85% of 800px */
+    width: 100%;
+    gap: 20px;
+}
+
+.left-panel {
+    flex: 0.45;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.right-panel {
+    flex: 0.55;
+    border-left: 1px solid #e0e0e0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* File path container */
+.file-path-container {
+    margin-bottom: 20px;
+}
+
+.file-path-row {
+    display: flex;
+    align-items: center;
+}
+
+#excelPath {
+    flex-grow: 1;
+    padding: 8px;
+    margin-right: 10px;
+    background-color: #f9f9f9;
+    cursor: default;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#selectPath {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background-color: #607d8b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#selectPath:hover {
+    opacity: 0.9;
+}
+
+/* Keyword container */
 .keyword-container {
-    margin: 20px 0;
-    max-width: 600px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+#keywords-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
 }
 
 .keyword-row {
     display: flex;
     margin-bottom: 10px;
     align-items: center;
+    width: calc(50% - 10px); /* Two keywords per row */
+    transition: all 0.3s ease;
+}
+
+
+.keyword-row:nth-child(odd) {
+    margin-right: 20px;
 }
 
 .keyword-input {
-    flex-grow: 1;
+    width: 100%;
     padding: 8px;
-    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Update keyword actions - no need for separator now */
+.keyword-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    display: none;
+}
+
+/* Buttons */
+.remove-btn {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    min-width: 50px;
+    height: 30px;
+    background-color: #9e9e9e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.remove-btn:hover {
+    background-color: #757575;
 }
 
 .keyword-actions {
@@ -23,43 +145,14 @@
     gap: 15px;
 }
 
-/* Add a separator line after the add-keyword button */
+/* Separator line */
 .separator {
     width: 80%;
     border-bottom: 1px solid #e0e0e0;
     margin: 5px 0 15px 0;
 }
 
-.hidden {
-    display: none;
-}
-
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none;
-}
-
-/* 버튼 크기 조절 */
-.remove-btn {
-    padding: 4px 8px;
-    font-size: 0.8rem;
-    min-width: 50px;
-    height: 30px;
-    background-color: #9e9e9e;  /* 회색 배경색 */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.remove-btn:hover {
-    background-color: #757575;  /* 더 짙은 회색으로 변경 */
-}
-
-/* Smaller add-keyword button */
+/* Action buttons */
 #add-keyword {
     padding: 6px 12px;
     font-size: 0.85rem;
@@ -71,7 +164,6 @@
     cursor: pointer;
 }
 
-/* Action buttons (run and stop) */
 #runAutomation, #stopAutomation {
     padding: 8px 16px;
     font-size: 0.95rem;
@@ -92,8 +184,8 @@
     display: none;
 }
 
-/* Hover effects for all buttons */
-#add-keyword:hover, #runAutomation:hover, #stopAutomation:hover {
+/* Button hover effects */
+#add-keyword:hover, #runAutomation:hover, #stopAutomation:hover, .log-actions button:hover {
     opacity: 0.9;
 }
 
@@ -101,4 +193,113 @@ button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
     opacity: 0.7;
+}
+
+/* Log container */
+.log-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#logOutput {
+    flex: 1;
+    padding: 10px;
+    font-family: Consolas, monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    resize: none;
+    white-space: pre-wrap;
+    overflow-y: auto;
+}
+
+.log-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.log-actions button {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    background-color: #607d8b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Utility classes */
+.hidden {
+    display: none;
+}
+
+#excelPath {
+    flex-grow: 1;
+    padding: 8px;
+    margin-right: 10px;
+    background-color: #f9f9f9;
+    cursor: pointer; /* Changed from default to pointer */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+#excelPath:hover {
+    background-color: #f0f0f0; /* Slight highlight on hover */
+    border-color: #bbb; /* Darker border on hover */
+}
+
+#excelPath:focus {
+    outline: none;
+    border-color: #2196F3; /* Match brand color */
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2); /* Subtle focus effect */
+}
+
+/* Add this to your CSS for the path error message */
+
+.path-error-message {
+    color: #ff5252;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: none;
+    font-weight: bold;
+}
+
+/* Fix the duplicated #excelPath rule - delete the duplicate and keep this one */
+#excelPath {
+    flex-grow: 1;
+    padding: 8px;
+    margin-right: 10px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+#excelPath:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+}
+
+#excelPath:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+/* Add this animation for the flash effect */
+@keyframes flashBorder {
+    0% { border-color: #ddd; }
+    50% { border-color: #ff5252; }
+    100% { border-color: #ddd; }
+}
+
+.flash-border {
+    animation: flashBorder 0.6s ease-in-out 3;
 }

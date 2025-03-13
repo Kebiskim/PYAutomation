@@ -1,0 +1,11 @@
+
+        /* Menu hover effects */
+        .menubar .menuitem:hover {
+            background-color: rgba(200, 200, 200, 0.2) !important;
+        }
+        
+        /* Menu item hover effects */
+        .menu-item:hover {
+            background-color: rgba(200, 200, 200, 0.3) !important;
+        }
+    
