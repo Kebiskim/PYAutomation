@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자동화 프로그램</title>
+    <link rel="stylesheet" href="styles/global.css">
+    <link rel="stylesheet" href="styles/page-automation.css">
+    <style>
+        .keyword-container {
+            margin: 20px 0;
+            max-width: 600px;
+        }
+        .keyword-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .keyword-input {
+            flex-grow: 1;
+            padding: 8px;
+            margin-right: 10px;
+        }
+        .keyword-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        /* 버튼 크기 조절 */
+        .remove-btn {
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            min-width: 50px;
+            height: 30px;
+            background-color: #9e9e9e;  /* 회색 배경색 */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .remove-btn:hover {
+            background-color: #757575;  /* 더 짙은 회색으로 변경 */
+        }
+        #add-keyword, #runAutomation {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+        #runAutomation {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #add-keyword {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #add-keyword:hover, #runAutomation:hover {
+            opacity: 0.9;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <h1>자동화 프로그램</h1>
+    
+    <div class="keyword-container">
+        <h3>검색할 키워드</h3>
+        <p>최대 10개까지 키워드를 추가할 수 있습니다.</p>
+        <div id="error-message" class="error-message">키워드를 입력해주세요.</div>
+        
+        <div id="keywords-list">
+            <div class="keyword-row">
+                <input type="text" class="keyword-input" placeholder="검색 키워드 입력">
+                <button class="remove-btn" onclick="removeKeyword(this)" disabled>삭제</button>
+            </div>
+        </div>
+        
+        <div class="keyword-actions">
+            <button id="add-keyword" onclick="addKeyword()">키워드 추가</button>
+            <button id="runAutomation">작업 시작</button>
+        </div>
+    </div>
+    
+    <p id="status">상태: 대기중...</p>
+
+    <script>
+        function addKeyword() {
+            const keywordsList = document.getElementById('keywords-list');
+            const keywordRows = keywordsList.querySelectorAll('.keyword-row');
+            
+            // 최대 10개 제한
+            if (keywordRows.length >= 10) {
+                alert('최대 10개까지만 추가할 수 있습니다.');
+                return;
+            }
+            
+            const newRow = document.createElement('div');
+            newRow.className = 'keyword-row';
+            newRow.innerHTML = `
+                <input type="text" class="keyword-input" placeholder="검색 키워드 입력">
+                <button class="remove-btn" onclick="removeKeyword(this)">삭제</button>
+            `;
+            
+            keywordsList.appendChild(newRow);
+            
+            // 첫 번째 행의 삭제 버튼 활성화 (2개 이상이면)
+            if (keywordRows.length === 1) {
+                document.querySelector('.remove-btn').disabled = false;
+            }
+        }
+        
+        function removeKeyword(button) {
+            const keywordsList = document.getElementById('keywords-list');
+            const row = button.parentNode;
+            keywordsList.removeChild(row);
+            
+            // 행이 하나만 남으면 삭제 버튼 비활성화
+            const keywordRows = keywordsList.querySelectorAll('.keyword-row');
+            if (keywordRows.length === 1) {
+                keywordRows[0].querySelector('.remove-btn').disabled = true;
+            }
+        }
+    </script>
+    
+    <script src="renderer.js"></script>
+</body>
+</html>

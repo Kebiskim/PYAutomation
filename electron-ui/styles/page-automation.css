@@ -1,0 +1,13 @@
+/* 페이지별 스타일 (page-automation.css) */
+
+/* 상태 메시지 완료 상태 */
+#status.completed {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* 상태 메시지 오류 상태 */
+#status.error {
+    color: #f44336;
+    font-weight: bold;
+}

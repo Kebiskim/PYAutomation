@@ -1,0 +1,11 @@
+{
+  "name": "자동화 프로그램",
+  "version": "1.0.0",
+  "main": "electron-ui/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^35.0.1"
+  }
+}
