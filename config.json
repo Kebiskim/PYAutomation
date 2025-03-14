@@ -8,8 +8,9 @@
         "../news_scraper_byKeyword.py"
     ],
     "excel_path": "C:\\Users\\cofis\\Downloads\\news_results.xlsx",
-    "windowWidth": 1936,
-    "windowHeight": 1048,
+    "windowWidth": 1200,
+    "windowHeight": 798,
     "windowResizable": true,
-    "devToolsEnabled": true
+    "devToolsEnabled": true,
+    "logFilePrefix": "뉴스_크롤링_프로그램_log_"
 }
