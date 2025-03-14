@@ -53,11 +53,11 @@ npm start
 📁 뉴스 크롤러 프로젝트
 │
 ├── 📂 .github/                  # VSCode Copilot instruction
-├── 📂 automation-back/          # Python 백엔드
+├── 📂 back_py/          # Python 백엔드
 │   ├── 📝 news_scraper_byKeyword.py  # 뉴스 크롤러 실행 파일
 │   └── 🛠️ utils.py             # 유틸리티 함수 모음
 │
-├── 📂 electron-ui/              # Electron 프론트엔드
+├── 📂 front-electron/              # Electron 프론트엔드
 │   ├── 📂 constants/           # 상수 관리 폴더
 │   │   ├── 🔧 app-defaults.js     # 앱 기본 설정값 상수
 │   │   ├── 🔠 error-constants.js  # 에러 관련 상수

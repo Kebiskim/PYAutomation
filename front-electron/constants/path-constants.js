@@ -74,7 +74,7 @@ const LOG_DIRECTORY = path.join(PROJECT_ROOT, 'logs');
  * // BACKEND_DIRECTORY를 사용하여 Python 스크립트 경로 생성
  * const scriptPath = path.join(BACKEND_DIRECTORY, 'news_scraper_byKeyword.py');
  */
-const BACKEND_DIRECTORY = path.join(PROJECT_ROOT, 'automation-back');
+const BACKEND_DIRECTORY = path.join(PROJECT_ROOT, 'back_py');
 
 // 모듈 내보내기
 module.exports = {

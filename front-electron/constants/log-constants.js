@@ -11,7 +11,7 @@
 // 필요한 모듈 가져오기
 const path = require('path');  // 경로 관련 작업을 위한 모듈
 const { LOG_DIRECTORY } = require('./path-constants');  // 경로 상수 가져오기
-const { getAppInfo } = require('./app-defaults');  // 앱 정보 가져오기 함수
+const { getAppNameFromConfig } = require('./app-defaults');  // 앱 이름 가져오기 함수
 
 /**
  * 로그 파일 관련 설정
@@ -28,9 +28,21 @@ const { getAppInfo } = require('./app-defaults');  // 앱 정보 가져오기 �
  *                              `${LOG_CONFIG.defaultPrefix}${dateString}.${LOG_CONFIG.extension}`);
  */
 const LOG_CONFIG = {
-    defaultPrefix: 'automation_log_',  // 기본 로그 파일 접두어
-    directory: LOG_DIRECTORY,          // 로그 저장 디렉토리 (path_constants.js에서 가져옴)
-    extension: 'log'                   // 로그 파일 확장자
+    defaultPrefix: `${getAppNameFromConfig().replace(/\s+/g, '_').toLowerCase()}_log_`,  // 기본 로그 파일 접두어
+    directory: LOG_DIRECTORY,  // 로그 저장 디렉토리 (path_constants.js에서 가져옴)
+    extension: 'log'  // 로그 파일 확장자
+};
+
+/**
+ * 로그 파일 기본 설정
+ * 
+ * 로그 파일 생성 시 사용할 기본 설정 값을 정의합니다.
+ * 
+ * @constant {Object}
+ * @property {string} prefix - 기본 로그 파일 접두어
+ */
+const LOG_DEFAULTS = {
+    prefix: LOG_CONFIG.defaultPrefix  // 기본 로그 파일 접두어
 };
 
 /**
@@ -48,7 +60,7 @@ const LOG_CONFIG = {
  */
 const DIALOG_STRINGS = {
     LOG_SAVE_TITLE: '로그 저장하기',  // 로그 저장 대화상자 제목
-    LOG_FILE_TYPE: '로그 파일'         // 로그 파일 형식 설명
+    LOG_FILE_TYPE: '로그 파일'  // 로그 파일 형식 설명
 };
 
 /**
@@ -72,15 +84,15 @@ function generateLogFileName(prefix = LOG_CONFIG.defaultPrefix) {
     
     // 날짜 및 시간 문자열 포맷팅 (YYYY-MM-DD_HH-MM-SS 형식)
     const dateString = [
-        now.getFullYear(),                       // 년도 (4자리)
+        now.getFullYear(),  // 년도 (4자리)
         String(now.getMonth() + 1).padStart(2, '0'),  // 월 (2자리, 0-패딩)
-        String(now.getDate()).padStart(2, '0')        // 일 (2자리, 0-패딩)
+        String(now.getDate()).padStart(2, '0')  // 일 (2자리, 0-패딩)
     ].join('-');
     
     const timeString = [
-        String(now.getHours()).padStart(2, '0'),      // 시간 (2자리, 0-패딩)
-        String(now.getMinutes()).padStart(2, '0'),    // 분 (2자리, 0-패딩)
-        String(now.getSeconds()).padStart(2, '0')     // 초 (2자리, 0-패딩)
+        String(now.getHours()).padStart(2, '0'),  // 시간 (2자리, 0-패딩)
+        String(now.getMinutes()).padStart(2, '0'),  // 분 (2자리, 0-패딩)
+        String(now.getSeconds()).padStart(2, '0')  // 초 (2자리, 0-패딩)
     ].join('-');
     
     // 최종 로그 파일 이름 생성 및 반환
@@ -105,7 +117,7 @@ function generateLogFileName(prefix = LOG_CONFIG.defaultPrefix) {
  */
 function createLogPrefix(appName) {
     // appName이 제공되지 않은 경우, package.json에서 읽어오기
-    const name = appName || getAppInfo().name;
+    const name = appName || getAppNameFromConfig();
     
     // 공백을 밑줄로 대체하고 소문자로 변환
     // 정규식 /\s+/g는 하나 이상의 공백 문자와 일치
@@ -119,8 +131,9 @@ function createLogPrefix(appName) {
 
 // 모듈 내보내기
 module.exports = {
-    LOG_CONFIG,          // 로그 파일 관련 설정
-    DIALOG_STRINGS,      // 대화상자 문자열 상수
-    generateLogFileName, // 로그 파일 이름 생성 함수
-    createLogPrefix      // 애플리케이션 이름에서 로그 파일 접두어 생성 함수
+    LOG_CONFIG,  // 로그 파일 관련 설정
+    LOG_DEFAULTS,  // 로그 파일 기본 설정
+    DIALOG_STRINGS,  // 대화상자 문자열 상수
+    generateLogFileName,  // 로그 파일 이름 생성 함수
+    createLogPrefix  // 애플리케이션 이름에서 로그 파일 접두어 생성 함수
 };

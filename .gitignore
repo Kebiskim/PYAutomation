@@ -6,7 +6,7 @@ yarn-error.log
 # Electron build files
 /dist/
 /out/
-/electron-ui/*.asar
+/front-electron/*.asar
 
 # Environment variables
 .env
