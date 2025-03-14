@@ -44,3 +44,5 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+WorkStatus.txt

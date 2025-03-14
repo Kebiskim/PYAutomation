@@ -7,12 +7,19 @@
 
 ## Install Python Modules
 ```
-pip install PyQt5, selenium, pandas, openpyxl
+pip install PyQt5, selenium, pandas, openpyxl, pyinstaller
 ```
 
 ## Install node modules
 ```
 npm install electron --save-dev
+```
+
+---
+
+## How to start up the project
+```
+npm start
 ```
 
 ---

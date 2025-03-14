@@ -48,14 +48,29 @@ h1 {
     align-items: center;
 }
 
+/* Excel path input - match the log output styling */
 #excelPath {
     flex-grow: 1;
-    padding: 8px;
+    padding: 10px; /* Match logOutput padding */
     margin-right: 10px;
-    background-color: #f9f9f9;
-    cursor: default;
+    background-color: #f8f8f8; /* Match logOutput background */
+    cursor: pointer;
     border: 1px solid #ddd;
     border-radius: 4px;
+    transition: all 0.2s ease;
+    font-family: Consolas, monospace; /* Match logOutput font */
+    font-size: 0.9rem; /* Match logOutput font size */
+}
+
+#excelPath:hover {
+    background-color: #f0f0f0;
+    border-color: #bbb;
+}
+
+#excelPath:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
 }
 
 #selectPath {
@@ -72,10 +87,31 @@ h1 {
     opacity: 0.9;
 }
 
+/* Error message styles */
+.error-message, .path-error-message {
+    color: #ff5252;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: none;
+}
+
+.path-error-message {
+    font-weight: bold;
+}
+
 /* Keyword container */
 .keyword-container {
     margin-bottom: 20px;
     width: 100%;
+}
+
+/* Help text styling - smaller and gray as requested */
+.keyword-container p {
+    color: #888;
+    font-size: 11px; /* 3pt smaller than normal text */
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-style: italic;
 }
 
 #keywords-grid {
@@ -92,7 +128,6 @@ h1 {
     transition: all 0.3s ease;
 }
 
-
 .keyword-row:nth-child(odd) {
     margin-right: 20px;
 }
@@ -107,16 +142,17 @@ h1 {
 /* Update keyword actions - no need for separator now */
 .keyword-actions {
     display: flex;
-    justify-content: center;
-    gap: 15px;
+    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
+    gap: 15px;
 }
 
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-    display: none;
+/* Separator line */
+.separator {
+    width: 80%;
+    border-bottom: 1px solid #e0e0e0;
+    margin: 5px 0 15px 0;
 }
 
 /* Buttons */
@@ -135,21 +171,6 @@ h1 {
 
 .remove-btn:hover {
     background-color: #757575;
-}
-
-.keyword-actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    gap: 15px;
-}
-
-/* Separator line */
-.separator {
-    width: 80%;
-    border-bottom: 1px solid #e0e0e0;
-    margin: 5px 0 15px 0;
 }
 
 /* Action buttons */
@@ -238,62 +259,7 @@ button:disabled {
     display: none;
 }
 
-#excelPath {
-    flex-grow: 1;
-    padding: 8px;
-    margin-right: 10px;
-    background-color: #f9f9f9;
-    cursor: pointer; /* Changed from default to pointer */
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-}
-
-#excelPath:hover {
-    background-color: #f0f0f0; /* Slight highlight on hover */
-    border-color: #bbb; /* Darker border on hover */
-}
-
-#excelPath:focus {
-    outline: none;
-    border-color: #2196F3; /* Match brand color */
-    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2); /* Subtle focus effect */
-}
-
-/* Add this to your CSS for the path error message */
-
-.path-error-message {
-    color: #ff5252;
-    font-size: 14px;
-    margin-bottom: 5px;
-    display: none;
-    font-weight: bold;
-}
-
-/* Fix the duplicated #excelPath rule - delete the duplicate and keep this one */
-#excelPath {
-    flex-grow: 1;
-    padding: 8px;
-    margin-right: 10px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
-
-#excelPath:hover {
-    background-color: #f0f0f0;
-    border-color: #bbb;
-}
-
-#excelPath:focus {
-    outline: none;
-    border-color: #2196F3;
-    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
-}
-
-/* Add this animation for the flash effect */
+/* Flash border animation for validation */
 @keyframes flashBorder {
     0% { border-color: #ddd; }
     50% { border-color: #ff5252; }
@@ -302,4 +268,66 @@ button:disabled {
 
 .flash-border {
     animation: flashBorder 0.6s ease-in-out 3;
+}
+
+/* Completion message styling */
+.completion-message {
+    background-color: #e8f5e9;
+    border-left: 4px solid #4caf50;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.success-icon {
+    background-color: #4caf50;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-weight: bold;
+}
+
+.completion-details {
+    flex: 1;
+}
+
+.completion-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2e7d32;
+}
+
+/* Log message styling */
+.log-info {
+    color: #333;
+}
+
+.log-success {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+.log-warning {
+    color: #ff9800;
+}
+
+.log-error {
+    color: #e53935;
+}
+
+.log-progress {
+    color: #1976d2;
+}
+
+.log-timestamp {
+    color: #777;
+    font-size: 12px;
+    margin-right: 5px;
 }

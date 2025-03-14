@@ -8,8 +8,9 @@
         "../news_scraper_byKeyword.py"
     ],
     "excel_path": "C:\\Users\\cofis\\Downloads\\news_results.xlsx",
-    "windowWidth": 1936,
-    "windowHeight": 1048,
+    "windowWidth": 1200,
+    "windowHeight": 800,
     "windowResizable": true,
-    "devToolsEnabled": true
+    "devToolsEnabled": true,
+    "logFilePrefix": "자동화 프로그램"
 }
