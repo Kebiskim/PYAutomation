@@ -1,7 +1,16 @@
 {
+    "name": "자동화 프로그램 프레임워크",
+    "version": "1.0.0",
+    "main": "front-electron/main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "dependencies": {
+        "electron": "^35.0.1"
+    },
     "search_url": "https://search.naver.com/search.naver?ssc=tab.news.all&where=news&sm=tab_jum&query={keyword}",
     "keywords": [],
-    "pythonScriptPath": "../automation-back/news_scraper_byKeyword.py",
+    "pythonScriptPath": "../back_py/news_scraper_byKeyword.py",
     "alternativeScriptPaths": [
         "scripts/news_scraper_byKeyword.py",
         "../scripts/news_scraper_byKeyword.py",

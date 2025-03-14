@@ -79,7 +79,7 @@ function createMainWindow(config) {
 
     // 메인 HTML 파일 로드
     // __dirname: 현재 스크립트 경로
-    // '..': 상위 디렉토리 (modules -> electron-ui)
+    // '..': 상위 디렉토리 (modules -> front-electron)
     mainWindow.loadFile(path.join(__dirname, '..', 'index.html'));
     
     // 생성된 메인 윈도우 객체 반환
