@@ -11,7 +11,7 @@ const { app, BrowserWindow, childProcess } = require('electron');
 const { loadConfig } = require('./modules/config-manager');
 const { createMainWindow, cleanup: cleanupWindow } = require('./modules/window-manager');
 const { cleanup: cleanupPython } = require('./modules/python-runner');
-const { setupIpcHandlers } = require('./modules/ipc-handler');
+const { setupIpcHandlers } = require('./modules/ipc-handlers/ipc-handler');
 
 // 애플리케이션 설정 로드
 const config = loadConfig();

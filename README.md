@@ -12,7 +12,7 @@
 - 📂 **엑셀 저장 기능**: 데이터를 **엑셀(.xlsx) 파일로 저장**하여 쉽게 활용할 수 있습니다.
 - ⚡ **빠른 실행**: 실행 버튼 한 번으로 뉴스 수집 자동화 시작
 - 🖥️ **사용자 친화적인 UI**: 누구나 손쉽게 사용할 수 있는 간편한 인터페이스
-- 🖥️💻 **Windows 환경에서 최적화**: Windows 환경에서 원활하게 실행되도록 설계되었습니다.
+- 💻 **Windows 환경에서 최적화**: Windows 환경에서 원활하게 실행되도록 설계되었습니다.
 
 ---
 
@@ -52,26 +52,53 @@ npm start
 ```
 📁 뉴스 크롤러 프로젝트
 │
-├── 📂 automation-back (Python 백엔드)
-│   ├── 📝 main.py - 뉴스 크롤러 실행 파일
-│   ├── 🛠️ utils.py - 유틸리티 함수 모음
-│   ├── automation.py - 크롤링 로직
-│   └── config.json - 설정 파일
+├── 📂 .github/                  # VSCode Copilot instruction
+├── 📂 automation-back/          # Python 백엔드
+│   ├── 📝 news_scraper_byKeyword.py  # 뉴스 크롤러 실행 파일
+│   └── 🛠️ utils.py             # 유틸리티 함수 모음
 │
-├── electron-app/ (Electron 프론트엔드)
-│   ├── 📜 package.json
-│   ├── 📜 main.js - Electron 앱 진입점
-│   ├── 📜 preload.js - 보안 IPC 통신 처리
-│   ├── 📜 renderer.js - 렌더러 프로세스 로직
-│   ├── 📁 modules/
-│   │   ├── 🔧 config-manager.js (설정 파일 관리)
-│   │   ├── constants.js (전역 상수 관리)
-│   │   ├── menubar.js (메뉴바 로직)
-│   │   └── logger.js (로그 기록)
-│   ├── 📜 index.html (메인 HTML 페이지)
-│   ├── styles.css (스타일시트)
-│   ├── app.js (앱 실행 로직)
-│   └── preload.js (렌더러 프로세스와 메인 프로세스 사이의 브릿지 역할)
+├── 📂 electron-ui/              # Electron 프론트엔드
+│   ├── 📂 constants/           # 상수 관리 폴더
+│   │   ├── 🔧 app-defaults.js     # 앱 기본 설정값 상수
+│   │   ├── 🔠 error-constants.js  # 에러 관련 상수
+│   │   ├── 🔠 export-constants.js # 상수 js파일 일괄 export
+│   │   ├── 🔠 log-constants.js    # log 관련 상수
+│   │   ├── 🛣️ path-constants.js   # 경로 관련 상수
+│   │   ├── 🛣️ python-constants.js # python(백엔드) 관련 상수
+│   │   └── 🔧 ui-constants.js     # UI 관련 상수
+│   │ 
+│   ├── 📂 modules/             # 주요 모듈 폴더
+│   │   ├── 📂 ipc-handlers/      # UI, 백엔드 간 통신 관련 functions
+│   │   │    ├── 🔧 ipc-automation-handler.js
+│   │   │    ├── 🔧 ipc-dev-tools-handler.js
+│   │   │    ├── 🔧 ipc-excel-handler.js  
+│   │   │    ├── 🔧 ipc-handler.js            # ipc 파일 전체 취합 후 export
+│   │   │    ├── 🔧 ipc-log-handler.js      
+│   │   │    └── 🔧 ipc-window-handler.js  
+│   │   │
+│   │   ├── 🔧 config-manager.js  # 설정 파일 관리
+│   │   ├── 📊 menubar.js         # 메뉴바 로직
+│   │   ├── 🐍 python_runner.js   # Python 실행 관리
+│   │   └── 🪟 window-manager.js  # 윈도우 관리
+│   │
+│   ├── 📂 scripts/             # 프론트엔드 스크립트
+│   │   └── 📱 app.js           # UI 동작 로직
+│   │
+│   ├── 📂 styles/              # CSS 스타일시트
+│   │   ├── 🎨 global.css        # 전역 스타일
+│   │   ├── 📄 index.css         # 메인 페이지 스타일
+│   │   ├── 📄 menu-custom.css         
+│   │   ├── 📄 menu.css         
+│   │   └── 📊 page-automation.css     # UI 컴포넌트 스타일
+│   │
+│   ├── 📜 index.html           # 메인 HTML 페이지
+│   ├── 📜 main.js              # Electron 앱 진입점
+│   ├── 📜 preload.js           # 보안 IPC 통신 처리
+│   ├── 📜 renderer.js          # 렌더러 프로세스 로직
+│   │
+├── 📜 config.json              # 애플리케이션 설정 파일
+├── 📜 package.json             # 프로젝트 설정 및 의존성
+└── 📜 README.md                # 프로젝트 문서
 ```
 
 ---
@@ -96,6 +123,18 @@ npm start
 
 ---
 
+## 💻 설계 철학
+
+이 프로젝트는 아래와 같은 설계 철학을 따릅니다:
+
+- **모듈화**: 각 기능을 담당하는 모듈을 분리하여 코드 유지보수성 향상
+- **상수 중앙화**: 모든 상수값을 `constants/` 폴더에서 중앙 관리하여 일관성 유지
+- **명확한 파일명**: 언더스코어(_)를 사용한 명확한 파일 네이밍으로 가독성 증대
+- **보안성**: IPC 통신을 통해 렌더러 프로세스와 메인 프로세스 간의 안전한 통신 구현
+- **사용자 경험**: 직관적인 UI와 명확한 피드백으로 사용자 친화적 환경 제공
+
+---
+
 ## ⚠️ 주의사항 & 유의사항 🚨
 
 - 프로그램은 **Windows** 환경에서 최적화되었습니다.
@@ -106,5 +145,13 @@ npm start
 
 ---
 
-💡 **더 궁금한 점이 있다면 언제든지 질문해주세요!** 🚀
+## 🔄 업데이트 내역
 
+- **2025-03-14**: 상수 관리 개선을 위한 `constants/` 폴더 추가 및 코드 최적화
+- **2025-03-13**: 파일명 일관성을 위해 언더스코어(_) 네이밍 규칙 적용
+- **2025-03-12**: 첫 버전 릴리스
+
+---
+
+💡 **더 궁금한 점이 있다면 언제든지 질문해주세요!** 🚀
+문의처: kebikim@kakao.com
