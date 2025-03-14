@@ -53,7 +53,7 @@ npm start
 📁 뉴스 크롤러 프로젝트
 │
 ├── 📂 .github/                  # VSCode Copilot instruction
-├── 📂 back_py/          # Python 백엔드
+├── 📂 back-py/          # Python 백엔드
 │   ├── 📝 news_scraper_byKeyword.py  # 뉴스 크롤러 실행 파일
 │   └── 🛠️ utils.py             # 유틸리티 함수 모음
 │

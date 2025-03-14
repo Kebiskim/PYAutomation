@@ -54,8 +54,6 @@ function setupExcelHandlers(mainWindow, config) {
                 // 선택된 경로를 UI로 전송
                 mainWindow.webContents.send('excel-path-selected', result.filePath);
                 
-                // 선택된 경로를 설정 파일에 저장 (설정 키 이름은 상수에서 가져옴)
-                // updateConfig(config, constants.CONFIG_KEYS.EXCEL_PATH, result.filePath);
             }
         }).catch(err => {
             // 대화상자 표시 중 오류 발생 시

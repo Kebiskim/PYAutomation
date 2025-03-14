@@ -139,15 +139,22 @@ def save_to_excel(results, excel_path=None):
             send_status_to_electron(f"대체 경로 저장 중 오류 발생: {str(fallback_error)}")
             return False, None, False
 
-def run_selenium_task(keywords=None):
+def run_selenium_task(keywords=None, headless_mode=True):
     """
     Selenium을 사용하여 뉴스 자동화 작업을 실행하는 메인 함수입니다.
     
     매개변수:
     - keywords: 검색할 키워드 목록
+    - headless_mode: 브라우저를 headless 모드로 실행할지 여부 (기본값: True)
     
     반환값:
     - 작업 성공 여부 (True/False)
+    
+    예시:
+    - run_selenium_task(['코로나', '백신'], headless_mode=True) 
+      => 코로나, 백신 키워드로 검색하되 브라우저 화면은 보이지 않음
+    - run_selenium_task(['경제', '주식'], headless_mode=False) 
+      => 경제, 주식 키워드로 검색하며 브라우저 화면이 사용자에게 보임
     """
     # 시작 시간 기록 (작업 소요 시간 계산용)
     start_time = time.time()
@@ -157,7 +164,7 @@ def run_selenium_task(keywords=None):
     search_url = config.get("search_url")
     excel_path = config.get("excel_path")
     
-    # 명령줄 인수에서 키워드 가져오기
+    # 명령줄 인수에서 키워드와 헤드리스 모드 설정 가져오기
     if keywords is None:
         if len(sys.argv) > 1:
             # 콤마로 구분된 키워드 목록 파싱
@@ -171,6 +178,10 @@ def run_selenium_task(keywords=None):
         excel_path = sys.argv[2]
         send_status_to_electron(f"명령줄에서 엑셀 저장 경로를 가져왔습니다: {excel_path}")
     
+    # 헤드리스 모드 설정 확인 (명령줄 세 번째 인수)
+    if len(sys.argv) > 3:
+        headless_mode = sys.argv[3].lower() == 'true'
+    
     if not keywords:
         send_status_to_electron("오류: 검색할 키워드가 제공되지 않았습니다")
         return False
@@ -180,15 +191,38 @@ def run_selenium_task(keywords=None):
     # Selenium WebDriver 설정
     send_status_to_electron("브라우저를 초기화하는 중입니다. 잠시만 기다려주세요...")
     chrome_options = Options()
-    # chrome_options.add_argument("--headless")  # 배포 시 주석 제거
     
-    # 추가적인 브라우저 옵션 설정
+    # Headless 모드 설정 - 사용자 선택에 따라 적용
+    if headless_mode:
+        # Headless 모드 활성화 (화면에 브라우저가 표시되지 않음)
+        chrome_options.add_argument("--headless=new")  # 최신 Chrome에서는 --headless=new 형식 사용
+        send_status_to_electron("헤드리스 모드가 활성화되었습니다 (브라우저 창이 표시되지 않습니다)")
+    else:
+        send_status_to_electron("헤드리스 모드가 비활성화되었습니다 (브라우저 창이 표시됩니다)")
+    
+    # 봇 탐지 방지를 위한 추가 옵션들
+    # 일반적인 브라우저처럼 보이게 User-Agent 설정
+    user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    chrome_options.add_argument(f'--user-agent={user_agent}')
+    
+    # 기타 봇 탐지 방지 옵션
+    chrome_options.add_argument('--disable-blink-features=AutomationControlled')  # 자동화 감지 기능 비활성화
+    chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 자동화 표시 제거
+    chrome_options.add_experimental_option('useAutomationExtension', False)  # 자동화 확장 기능 비활성화
+    
+    # 기존 옵션 유지
     chrome_options.add_argument("--disable-gpu")  # GPU 가속 비활성화
     chrome_options.add_argument("--no-sandbox")  # 샌드박스 모드 비활성화
     chrome_options.add_argument("--window-size=1920,1080")  # 창 크기 설정
+    chrome_options.add_argument("--disable-dev-shm-usage")  # 공유 메모리 사용 제한 비활성화 (안정성 향상)
+    chrome_options.add_argument("--start-maximized")  # 창을 최대화하여 시작
     
-    send_status_to_electron("웹 브라우저를 시작하는 중입니다...")
+    send_status_to_electron(f"웹 브라우저를 시작하는 중입니다... {'(헤드리스 모드)' if headless_mode else ''}")
     driver = webdriver.Chrome(options=chrome_options)
+    
+    # 봇 탐지 방지를 위해 WebDriver 관련 식별자 제거 (JavaScript 레벨에서)
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    
     send_status_to_electron("웹 브라우저가 성공적으로 시작되었습니다")
     
     all_results = []  # 모든 결과를 저장할 리스트
@@ -326,4 +360,9 @@ def run_selenium_task(keywords=None):
 
 # Selenium 작업 실행
 if __name__ == "__main__":
-    run_selenium_task()
+    # 헤드리스 모드 설정 확인 (명령줄 세 번째 인수)
+    headless_mode = True  # 기본값은 True (헤드리스 모드 활성화)
+    if len(sys.argv) > 3:
+        headless_mode = sys.argv[3].lower() == 'true'
+    
+    run_selenium_task(headless_mode=headless_mode)

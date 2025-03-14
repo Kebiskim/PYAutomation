@@ -331,3 +331,43 @@ button:disabled {
     font-size: 12px;
     margin-right: 5px;
 }
+
+/* 브라우저 옵션 스타일링 */
+.browser-options {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* 옵션 행 스타일 */
+.option-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+/* 옵션 레이블 스타일 */
+.option-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* 옵션 설명 텍스트 스타일링 - 키워드 도움말과 동일한 스타일 적용 */
+.option-description {
+    color: #888;
+    font-size: 11px;
+    margin-top: 2px;
+    margin-bottom: 8px;
+    margin-left: 24px; /* 체크박스와 텍스트 아래 정렬을 위한 여백 */
+    font-style: italic;
+}
+
+/* 체크박스 스타일링 */
+.option-label input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* 툴팁 제거 (간소화를 위해) */
+.tooltip {
+    display: none;
+}
