@@ -63,11 +63,21 @@ function loadConfig() {
  * 
  * 애플리케이션에서 사용할 기본 설정 값을 정의합니다.
  * 설정 파일이 없거나 로드할 수 없을 때 이 기본 설정이 사용됩니다.
+ * package.json 파일에서 애플리케이션 기본 정보를 가져와 설정에 반영합니다.
  * 
  * @returns {Object} 기본 설정 객체
  */
 function createDefaultConfig() {
     console.log('기본 설정 생성 중');
+    
+    // 애플리케이션 정보를 package.json에서 가져오기
+    const appInfo = getPackageInfo();
+    
+    // 애플리케이션 이름에서 로그 파일 접두어 생성
+    // 공백을 밑줄로 대체하고 소문자로 변환하여 파일 이름으로 적합하게 만듦
+    const logPrefix = appInfo.name ? 
+        appInfo.name.replace(/\s+/g, '_').toLowerCase() + '_log_' : 
+        'automation_log_';
     
     // 기본 설정 객체 정의
     return {
@@ -86,9 +96,63 @@ function createDefaultConfig() {
             '../news_scraper_byKeyword.py'
         ],
         
-        // 추후 확장을 위한 다른 기본 설정 항목을 여기에 추가할 수 있습니다.
-        logFilePrefix: 'automation_log_'  // 로그 파일 저장 시 사용할 접두어
+        // package.json에서 가져온 앱 이름 기반으로 로그 파일 접두어 설정
+        // 예: 앱 이름이 "뉴스 크롤링 프로그램"이면 "뉴스_크롤링_프로그램_log_"로 설정됨
+        logFilePrefix: logPrefix
     };
+}
+
+/**
+ * package.json 파일에서 애플리케이션 정보를 읽어오는 함수
+ * 
+ * 프로젝트 루트 디렉토리의 package.json 파일을 읽고 파싱하여
+ * 애플리케이션 이름, 버전 등의 정보를 추출합니다.
+ * 
+ * @returns {Object} 애플리케이션 정보 객체 ({name, version} 등)
+ * @example
+ * // 반환값 예시:
+ * // {
+ * //   name: "뉴스 크롤링 프로그램",
+ * //   version: "1.0.0"
+ * // }
+ */
+function getPackageInfo() {
+    // 기본값 설정 - package.json 읽기 실패 시 사용할 기본 애플리케이션 정보
+    const defaultPackageInfo = {
+        name: '뉴스 크롤링 프로그램',  // 기본 애플리케이션 이름
+        version: '1.0.0'           // 기본 버전 문자열
+    };
+    
+    try {
+        // package.json 파일 경로 설정 (프로젝트 루트 디렉토리)
+        // __dirname: 현재 실행 중인 스크립트 파일의 디렉토리 경로
+        // '..', '..': 상위 디렉토리로 두 번 이동 (electron-ui/modules -> electron-ui -> 프로젝트 루트)
+        // path.join(): 플랫폼 독립적인 방식으로 경로 문자열을 결합
+        const packagePath = path.join(__dirname, '..', '..', 'package.json');
+        
+        // package.json 파일 읽기 및 파싱
+        // fs.readFileSync(): 파일을 동기적으로 읽어오는 메서드
+        // 'utf8': 파일 인코딩 방식 지정
+        // JSON.parse(): 문자열을 JSON 객체로 변환
+        const packageData = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
+        
+        // 디버깅용 로그: 읽어온 package.json 데이터 출력
+        console.log('package.json 데이터 로드됨:', packagePath);
+        
+        // 필요한 정보 반환 (package.json에서 값을 가져오거나 기본값 사용)
+        // || 연산자: 좌측 값이 falsy(undefined, null 등)일 경우 우측 값을 사용
+        return {
+            name: packageData.name || defaultPackageInfo.name,         // 앱 이름
+            version: packageData.version || defaultPackageInfo.version  // 앱 버전
+        };
+    } catch (error) {
+        // 파일 읽기 실패 시 오류 로깅 및 기본값 반환
+        // 파일이 없거나, 권한이 없거나, JSON 파싱에 실패한 경우 등
+        console.error('package.json 읽기 오류 발생:', error);
+        
+        // 오류 발생 시 기본값 객체를 반환하여 앱 동작 유지
+        return defaultPackageInfo;
+    }
 }
 
 /**

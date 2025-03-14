@@ -1,5 +1,5 @@
 {
-  "name": "자동화 프로그램",
+  "name": "자동화 프로그램 프레임워크",
   "version": "1.0.0",
   "main": "electron-ui/main.js",
   "scripts": {

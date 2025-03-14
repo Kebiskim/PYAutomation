@@ -9,8 +9,8 @@
     ],
     "excel_path": "C:\\Users\\cofis\\Downloads\\news_results.xlsx",
     "windowWidth": 1200,
-    "windowHeight": 800,
+    "windowHeight": 798,
     "windowResizable": true,
     "devToolsEnabled": true,
-    "logFilePrefix": "자동화 프로그램"
+    "logFilePrefix": "뉴스_크롤링_프로그램_log_"
 }
